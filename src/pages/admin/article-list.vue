@@ -57,8 +57,7 @@
         :fullscreen="true"
         :show-close="false"
       >
-        <!-- <template #header="{ close, titleId, titleClass }"> -->
-        <template #header="{}">
+        <template #header="{ close, titleId, titleClass }">
           <!-- 固钉组件，固钉到顶部 -->
           <el-affix :offset="20" style="width: 100%">
             <!-- 指定 flex 布局， 高度为 10， 背景色为白色 -->
