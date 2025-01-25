@@ -7,7 +7,10 @@ export const useUserStore = defineStore(
   'user',
   () => {
     // 用户信息
-    const userInfo = ref({})
+    const userInfo = ref({
+      avatar: '',
+      username: '',
+    })
 
     // 设置用户信息
     function setUserInfo() {
@@ -27,7 +30,11 @@ export const useUserStore = defineStore(
       userInfo.value = {}
     }
 
-    return { userInfo, setUserInfo, logout }
+    const setAvatarPath = (path) => {
+      userInfo.value.avatar = path
+    }
+
+    return { userInfo, setUserInfo, logout, setAvatarPath }
   },
   {
     // 开启持久化

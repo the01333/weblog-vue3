@@ -1,12 +1,12 @@
 <template>
   <div
-    class="bg-slate-800 h-screen text-white menu-container transition-all"
+    class="fixed overflow-y-auto bg-slate-800 h-screen text-white menu-container transition-all"
     :style="{ width: menuStore.menuWidth }"
   >
     <!-- 顶部 Logo, 指定高度为 64px, 和右边的 Header 头保持一样高 -->
     <div class="flex items-center justify-center h-[64px]">
-      <img v-if="menuStore.menuWidth == '250px'" src="@/assets/weblog-logo.png" class="h-[60px]" />
-      <img v-else src="@/assets/weblog-logo-mini.png" class="h-[60px]">
+      <img v-if="menuStore.menuWidth == '250px'" :src="logoStore.logoPath || '@/assets/weblog-logo.png'" class="h-[60px]" />
+      <img v-else :src="logoStore.logoPath || '@/assets/weblog-logo-mini.png'" class="h-[60px]">
     </div>
 
     <!-- 下方菜单 -->
@@ -30,14 +30,17 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useMenuStore } from '@/stores/menu'
+import { useLogoStore } from '@/stores/logo'
+import { getBlogSettingsDetail } from '@/api/admin/blogSettings'
 
 // 引入 useMenuStore
 const menuStore = useMenuStore()
 const route = useRoute()
 const router = useRouter()
+const logoStore = useLogoStore()
 
 // 根据路由地址判断哪个菜单被选中
 const defaultActive = ref(route.path)
@@ -78,6 +81,14 @@ const menus = [
     path: '/admin/blog/setting',
   },
 ]
+
+onMounted(() => {
+  getBlogSettingsDetail().then((res) => {
+    if (res.success) {
+      logoStore.setLogoPath(res.data.logo)
+    }
+  })
+})
 </script>
 
 <style>
