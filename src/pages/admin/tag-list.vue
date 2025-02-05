@@ -188,7 +188,7 @@ const onSubmit = () => {
     form.tagList = dynamicTags.value
     addTag(form)
       .then((res) => {
-        if (res.success == true) {
+        if (res.success) {
           showMessage('添加成功')
           // 将表单中标签数组置空
           form.tagList = []

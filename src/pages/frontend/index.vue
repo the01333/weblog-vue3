@@ -85,7 +85,7 @@
                         d="M1 5v11a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H1Zm0 0V2a1 1 0 0 1 1-1h5.443a1 1 0 0 1 .8.4l2.7 3.6H1Z"
                     />
                   </svg>
-                  <a href="#" class="text-gray-400 hover:underline">{{
+                  <a @click="goToCategory(article.category.id, article.category.name)" class="text-gray-400 hover:underline">{{
                       article.category.name
                     }}</a>
                 </p>
@@ -130,7 +130,7 @@
                   @click="getArticles(pageNo)"
                   class="flex items-center justify-center px-4 h-10 leading-tight border dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                   :class="[
-                  pageNo == current
+                  pageNo === current
                     ? 'text-blue-600 bg-blue-50 border-blue-300 hover:bg-blue-100 hover:text-blue-700'
                     : 'text-gray-500 border-gray-300 bg-white hover:bg-gray-100 hover:text-gray-700',
                 ]"
@@ -189,6 +189,9 @@ import TagListCard from "@/layouts/frontend/components/TagListCard.vue"
 import {initTooltips} from 'flowbite'
 import {onMounted, ref} from 'vue'
 import {getArticlePageList} from '@/api/frontend/article'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 // 文章集合
 const articles = ref([])
@@ -215,6 +218,14 @@ function getArticles(currentNo) {
       total.value = res.total
       pages.value = res.pages
     }
+  })
+}
+
+// 跳转到分类文章列表页
+const goToCategory = (id, name) => {
+  router.push({
+    path: '/category/article/list',
+    query: { id, name }
   })
 }
 

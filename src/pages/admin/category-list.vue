@@ -149,7 +149,7 @@ const onSubmit = () => {
     formDialogRef.value.showBtnLoading()
     
     addCategory(form).then((res) => {
-      if (res.success == true) {
+      if (res.success) {
         showMessage('添加成功')
         // 将表单中分类名称置空
         form.name = ''
