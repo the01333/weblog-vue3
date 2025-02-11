@@ -18,7 +18,7 @@
                 class="bg-white border h-full border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700"
             >
               <!-- 文章封面 -->
-              <a href="#">
+              <a @click="goArticleDetailPage(article.id)" class="cursor-pointer">
                 <img class="rounded-t-lg h-48 w-full" :src="article.cover"/>
               </a>
               <div class="p-5">
@@ -27,13 +27,14 @@
                   <span
                       v-for="(tag, tagIndex) in article.tagList"
                       :key="tagIndex"
+                      @click="goToTagArticleList(tag.id, tag.name)"
                       class="cursor-pointer bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded hover:bg-green-200 hover:text-green-900 dark:bg-green-900 dark:text-green-300"
                   >{{ tag.name }}</span
                   >
                 </div>
 
                 <!-- 文章标题 -->
-                <a href="#">
+                <a @click="goArticleDetailPage(article.id)" class="cursor-pointer">
                   <h2
                       class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
                   >
@@ -168,16 +169,20 @@
 
       <!-- 右边侧边栏，占用一列 -->
       <aside class="col-span-4 md:col-span-1">
-        <!-- 博主信息 -->
-        <UserInfoCard></UserInfoCard>
-        <!-- 分类 -->
-        <CategoryListCard></CategoryListCard>
-        <!-- 标签 -->
-        <TagListCard></TagListCard>
+        <div class="sticky top-[5.5rem]">
+<!--        <div>-->
+          <!-- 博主信息 -->
+          <UserInfoCard></UserInfoCard>
+          <!-- 分类 -->
+          <CategoryListCard></CategoryListCard>
+          <!-- 标签 -->
+          <TagListCard></TagListCard>
+        </div>
       </aside>
     </div>
   </main>
 
+  <ScrollToTopButton></ScrollToTopButton>
   <Footer></Footer>
 </template>
 
@@ -185,11 +190,13 @@
 import Header from '@/layouts/frontend/components/Header.vue'
 import Footer from '@/layouts/frontend/components/Footer.vue'
 import UserInfoCard from "@/layouts/frontend/components/UserInfoCard.vue"
+import CategoryListCard from "@/layouts/frontend/components/CategoryListCard.vue"
 import TagListCard from "@/layouts/frontend/components/TagListCard.vue"
 import {initTooltips} from 'flowbite'
 import {onMounted, ref} from 'vue'
 import {getArticlePageList} from '@/api/frontend/article'
 import { useRouter } from 'vue-router'
+import ScrollToTopButton from '@/layouts/frontend/components/ScrollToTopButton.vue'
 
 const router = useRouter()
 
@@ -227,6 +234,18 @@ const goToCategory = (id, name) => {
     path: '/category/article/list',
     query: { id, name }
   })
+}
+
+const goToTagArticleList = (id, name) => {
+  router.push({
+    path: '/tag/article/list',
+    query: { id, name }
+  })
+}
+
+// 跳转文章详情页
+const goArticleDetailPage = (articleId) => {
+  router.push('/article/' + articleId)
 }
 
 getArticles(current.value)
