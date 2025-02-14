@@ -5,12 +5,12 @@
     <div class="bg-white h-[64px] flex pr-4 border-b border-slate-100">
       <!-- 左边栏收缩、展开 -->
       <div
-        class="w-[42px] h-[64px] cursor-pointer flex items-center justify-center text-gray-700 hover:bg-gray-200"
-        @click="handleMenuWidth"
+          class="w-[42px] h-[64px] cursor-pointer flex items-center justify-center text-gray-700 hover:bg-gray-200"
+          @click="handleMenuWidth"
       >
         <el-icon>
-          <Fold v-if="menuStore.menuWidth == '250px'" />
-          <Expand v-else />
+          <Fold v-if="menuStore.menuWidth == '250px'"/>
+          <Expand v-else/>
         </el-icon>
       </div>
 
@@ -18,62 +18,73 @@
       <div class="ml-auto flex">
         <!-- 点击刷新页面 -->
         <el-tooltip
-          class="box-item"
-          effect="dark"
-          content="刷新"
-          placement="bottom"
+            class="box-item"
+            effect="dark"
+            content="刷新"
+            placement="bottom"
         >
           <div
-            class="w-[42px] h-[64px] cursor-pointer flex items-center justify-center text-gray-700 hover:bg-gray-200"
-            @click="handleRefresh"
+              class="w-[42px] h-[64px] cursor-pointer flex items-center justify-center text-gray-700 hover:bg-gray-200"
+              @click="handleRefresh"
           >
             <el-icon>
-              <Refresh />
+              <Refresh/>
+            </el-icon>
+          </div>
+        </el-tooltip>
+
+        <!-- 点击跳转前台首页 -->
+        <el-tooltip class="box-item" effect="dark" content="跳转前台" placement="bottom">
+          <div class="w-[42px] h-[64px] cursor-pointer flex items-center justify-center text-gray-700 hover:bg-gray-200"
+               @click="router.push('/')">
+            <el-icon>
+              <Monitor/>
             </el-icon>
           </div>
         </el-tooltip>
 
         <!-- 点击全屏展示 -->
         <el-tooltip
-          class="box-item"
-          effect="dark"
-          content="全屏"
-          placement="bottom"
+            class="box-item"
+            effect="dark"
+            content="全屏"
+            placement="bottom"
         >
           <div
-            class="w-[42px] h-[64px] cursor-pointer flex items-center justify-center text-gray-700 mr-2 hover:bg-gray-200"
-            @click="toggle"
+              class="w-[42px] h-[64px] cursor-pointer flex items-center justify-center text-gray-700 mr-2 hover:bg-gray-200"
+              @click="toggle"
           >
             <el-icon>
-              <FullScreen v-if="!isFullscreen" />
-              <Aim v-else />
+              <FullScreen v-if="!isFullscreen"/>
+              <Aim v-else/>
             </el-icon>
           </div>
         </el-tooltip>
 
         <!-- 登录用户头像 -->
         <el-dropdown
-          class="flex items-center justify-center"
-          @command="handleCommand"
+            class="flex items-center justify-center"
+            @command="handleCommand"
         >
           <span
-            class="el-dropdown-link flex items-center justify-center text-gray-700 text-xs"
+              class="el-dropdown-link flex items-center justify-center text-gray-700 text-xs"
           >
             <!-- 头像 Avatar -->
             <el-avatar
-              class="mr-2"
-              :size="25"
-              :src="userStore.userInfo.avatar || 'https://ss2.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=144746069,33861948&fm=253&gp=0.jpg'"
+                class="mr-2"
+                :size="25"
+                :src="userStore.userInfo.avatar || 'https://ss2.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=144746069,33861948&fm=253&gp=0.jpg'"
             />
             {{ userStore.userInfo.username }}
             <el-icon class="el-icon--right">
-              <arrow-down />
+              <arrow-down/>
             </el-icon>
           </span>
           <template #dropdown>
             <el-dropdown-menu>
               <el-dropdown-item command="updatePassword"
-                >修改密码</el-dropdown-item
+              >修改密码
+              </el-dropdown-item
               >
               <el-dropdown-item command="logout">退出登录</el-dropdown-item>
             </el-dropdown-menu>
@@ -83,41 +94,41 @@
 
       <!-- 修改密码对话框 -->
       <FormDialog
-        ref="formDialogRef"
-        title="修改密码"
-        width="40%"
-        confirm-text="提交"
-        :destroy-on-close="true"
-        @submit="onSubmit"
+          ref="formDialogRef"
+          title="修改密码"
+          width="40%"
+          confirm-text="提交"
+          :destroy-on-close="true"
+          @submit="onSubmit"
       >
         <el-form ref="formRef" :rules="rules" :model="form">
           <el-form-item label="用户名" prop="username" label-width="120px">
             <el-input
-              size="large"
-              v-model="form.username"
-              placeholder="请输入用户名"
-              clearable
-              disabled
+                size="large"
+                v-model="form.username"
+                placeholder="请输入用户名"
+                clearable
+                disabled
             />
           </el-form-item>
           <el-form-item label="密码" prop="password" label-width="120px">
             <el-input
-              size="large"
-              type="password"
-              v-model="form.password"
-              placeholder="请输入密码"
-              clearable
-              show-password
+                size="large"
+                type="password"
+                v-model="form.password"
+                placeholder="请输入密码"
+                clearable
+                show-password
             />
           </el-form-item>
           <el-form-item label="确认密码" prop="rePassword" label-width="120px">
             <el-input
-              size="large"
-              type="password"
-              v-model="form.rePassword"
-              placeholder="请确认密码"
-              clearable
-              show-password
+                size="large"
+                type="password"
+                v-model="form.rePassword"
+                placeholder="请确认密码"
+                clearable
+                show-password
             />
           </el-form-item>
         </el-form>
@@ -127,14 +138,14 @@
 </template>
 
 <script setup>
-import { useMenuStore } from '@/stores/menu'
+import {useMenuStore} from '@/stores/menu'
 // 引入 useFullscreen
-import { useFullscreen } from '@vueuse/core'
-import { useUserStore } from '@/stores/user'
-import { useRouter } from 'vue-router'
-import { showModel, showMessage } from '@/composables/util'
-import { ref, reactive, watch } from 'vue'
-import { updateAdminPassword } from '@/api/admin/user'
+import {useFullscreen} from '@vueuse/core'
+import {useUserStore} from '@/stores/user'
+import {useRouter} from 'vue-router'
+import {showModel, showMessage} from '@/composables/util'
+import {ref, reactive, watch} from 'vue'
+import {updateAdminPassword} from '@/api/admin/user'
 import FormDialog from '@/components/FormDialog.vue'
 
 // 引入了用户 Store
@@ -143,7 +154,7 @@ const userStore = useUserStore()
 const router = useRouter()
 
 // isFullscreen 表示当前是否处于全屏；toggle 用于动态切换全屏、非全屏
-const { isFullscreen, toggle } = useFullscreen()
+const {isFullscreen, toggle} = useFullscreen()
 
 // 引入了菜单 store
 const menuStore = useMenuStore()
@@ -172,15 +183,15 @@ const form = reactive({
 
 // 监听 Pinia store 中的某个值的变化
 watch(
-  () => userStore.userInfo.username,
-  (newValue, oldValue) => {
-    // console.log('新值: ', newValue)
-    // console.log('旧值: ', oldValue)
+    () => userStore.userInfo.username,
+    (newValue, oldValue) => {
+      // console.log('新值: ', newValue)
+      // console.log('旧值: ', oldValue)
 
-    // 可以在这里执行任何你需要的逻辑
-    // 重新将新的值，设置会 form 对象中
-    form.username = newValue
-  }
+      // 可以在这里执行任何你需要的逻辑
+      // 重新将新的值，设置会 form 对象中
+      form.username = newValue
+    }
 )
 
 // 规则校验
@@ -247,29 +258,29 @@ const onSubmit = () => {
 
     // 调用修改用户密码接口
     updateAdminPassword(form)
-      .then((res) => {
-        console.log(res)
-        if (res.success == true) {
-          showMessage('密码重置成功，请重新登录！')
-          // 退出登录
-          userStore.logout()
+        .then((res) => {
+          console.log(res)
+          if (res.success == true) {
+            showMessage('密码重置成功，请重新登录！')
+            // 退出登录
+            userStore.logout()
 
-          // 关闭对话框
-          formDialogRef.value.close()
+            // 关闭对话框
+            formDialogRef.value.close()
 
-          // 跳转登录页
-          router.push('/login')
-        } else {
-          // 获取服务端返回的错误消息
-          let message = res.message
-          // 提示消息
-          showMessage(message, 'error')
-        }
-      })
-      .finally(() => {
-        // 隐藏提交按钮 loading
-        formDialogRef.value.closeBtnLoading()
-      })
+            // 跳转登录页
+            router.push('/login')
+          } else {
+            // 获取服务端返回的错误消息
+            let message = res.message
+            // 提示消息
+            showMessage(message, 'error')
+          }
+        })
+        .finally(() => {
+          // 隐藏提交按钮 loading
+          formDialogRef.value.closeBtnLoading()
+        })
   })
 }
 </script>
